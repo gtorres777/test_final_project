@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'helm-app/**'
-      - 'app/client/**'
-      - '.github/**'
+    paths:
+      - 'app/server/**'
+      - '!helm-app/**'
+      - '!app/client/**'
+      - '!.github/**'
 
 jobs:
   build:
