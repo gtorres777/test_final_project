@@ -20,10 +20,10 @@ jobs:
           echo "::set-output name=sha::$SHA"
 
       - name: Build js-frontend docker image
-        run: docker build -t biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} -f ./app/client
+        run: docker build -t biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} ./app/client
       
       - name: Build microservice docker image
-        run: docker build -t biotux7/microservice:${{ steps.generate_sha.outputs.sha }} -f ./app/server
+        run: docker build -t biotux7/microservice:${{ steps.generate_sha.outputs.sha }} ./app/server
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
