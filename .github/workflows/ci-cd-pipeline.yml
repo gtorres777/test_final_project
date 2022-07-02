@@ -14,14 +14,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-          
+
       - name: Generate sha
         id: generate_sha
         run: |
           SHA=$(echo $GITHUB_SHA)
           echo "::set-output name=sha::$SHA"
+
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+             client:
+              - 'app/client/**'
+             server:
+              - 'app/server/**'
+      # run only if some file in 'src' folder was changed
+      - if: steps.changes.outputs.client == 'true' && steps.changes.outputs.server == 'true'
 
       - name: Build js-frontend docker image
         run: docker build -t biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} ./app/client
