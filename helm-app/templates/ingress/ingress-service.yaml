@@ -23,10 +23,3 @@ spec:
                 name: {{ .Values.backend.name }}-cluster-ip-service
                 port:
                   number: {{ .Values.backend.ingressPorts.port }}
-          - path: /argocd
-            pathType: Prefix
-            backend:
-              service:
-                name: argocd-server
-                port:
-                  number: 443
