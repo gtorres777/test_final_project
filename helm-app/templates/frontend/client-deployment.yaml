@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.client.name }}
-          image: {{ .Values.client.image.repository }}
+          image: {{ .Values.client.image.repository }}:{{ .Values.client.image.tag }}
           ports:
             - containerPort: {{ .Values.client.deploymentPorts.containerPort }}
 

@@ -15,6 +15,7 @@ client:
 
   image:
     repository: biotux7/js-frontend
+    tag: 1
 
   # -- Ports for deployment
   deploymentPorts:
@@ -40,6 +41,7 @@ backend:
 
   image:
     repository: biotux7/microservice
+    tag: 1
 
   # -- Ports for deployment
   deploymentPorts:

@@ -47,9 +47,20 @@ jobs:
         uses: fjogeleit/yaml-update-action@master
         with:
           branch: main
-          valueFile: 'helm-app/react-node-app/values.yaml'
-          propertyPath: 'image.tag'
+          valueFile: 'helm-app/values.yaml'
+          propertyPath: 'client.image.tag'
           value: ${{ steps.generate_sha.outputs.sha }}
           commitChange: true
           updateFile: true
-          message: "NEW: Update tag in values helm"
+          message: "NEW: Update tag in frontend values helm"
+
+      - name: Update microservice image helm
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          branch: main
+          valueFile: 'helm-app/values.yaml'
+          propertyPath: 'backend.image.tag'
+          value: ${{ steps.generate_sha.outputs.sha }}
+          commitChange: true
+          updateFile: true
+          message: "NEW: Update tag in microservice values helm"
