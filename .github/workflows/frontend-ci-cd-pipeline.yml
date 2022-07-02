@@ -1,4 +1,4 @@
-name: CI/CD react node app
+name: CI/CD frontend service
 
 on:
   push:
@@ -6,11 +6,10 @@ on:
       - main
     paths:
       - 'app/client/**'
-      - 'app/server/**'
     paths-ignore:
       - 'helm-app/**'
+      - 'app/server/**'
       - '.github/**'
-
 
 jobs:
   build:
@@ -29,9 +28,6 @@ jobs:
       - name: Build js-frontend docker image
         run: docker build -t biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} ./app/client
       
-      - name: Build microservice docker image
-        run: docker build -t biotux7/microservice:${{ steps.generate_sha.outputs.sha }} ./app/server
-
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -44,12 +40,6 @@ jobs:
           docker tag biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} biotux7/js-frontend:latest
           docker push biotux7/js-frontend:latest
           
-      - name: Push microservice image
-        run: |
-          docker push biotux7/microservice:${{ steps.generate_sha.outputs.sha }}
-          docker tag biotux7/microservice:${{ steps.generate_sha.outputs.sha }} biotux7/microservice:latest
-          docker push biotux7/microservice:latest
-
       - name: Update js-frontend image helm
         uses: fjogeleit/yaml-update-action@master
         with:
@@ -59,15 +49,5 @@ jobs:
           value: ${{ steps.generate_sha.outputs.sha }}
           commitChange: true
           updateFile: true
-          message: "NEW: Update tag for both images in values helm"
+          message: "NEW: Update tag in frontend values helm"
 
-      - name: Update microservice image helm
-        uses: fjogeleit/yaml-update-action@master
-        with:
-          branch: main
-          valueFile: 'helm-app/values.yaml'
-          propertyPath: 'backend.image.tag'
-          value: ${{ steps.generate_sha.outputs.sha }}
-          commitChange: true
-          updateFile: true
-          message: "NEW: Update tag for both images in values helm"
