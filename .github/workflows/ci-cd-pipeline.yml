@@ -26,7 +26,7 @@ jobs:
       
 
   extra:
-    if: jobs.build.steps.changes.outputs.client == 'true' && jobs.build.steps.changes.outputs.server == 'true'
+    if: build.steps.changes.outputs.client == 'true' && build.steps.changes.outputs.server == 'true'
     runs-on: ubuntu-latest
 
     steps:
