@@ -12,14 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-
-      - name: Generate sha
-        id: generate_sha
-        run: |
-          SHA=$(echo $GITHUB_SHA)
-          echo "::set-output name=sha::$SHA"
-
       - uses: actions/checkout@v3
       - uses: dorny/paths-filter@v2
         id: changes
@@ -29,37 +23,19 @@ jobs:
               - 'app/client/**'
              server:
               - 'app/server/**'
-      # run only if some file in 'src' folder was changed
-      - if: steps.changes.outputs.client == 'true' && steps.changes.outputs.server == 'true'
-        run: docker build -t biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} ./app/client
-        run: docker build -t biotux7/microservice:${{ steps.generate_sha.outputs.sha }} ./app/server
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+
+  extra:
+    if: jobs.build.steps.changes.outputs.client == 'true' && jobs.build.steps.changes.outputs.server == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate sha
+        id: generate_sha
         run: |
-          docker push biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }}
-          docker tag biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} biotux7/js-frontend:latest
-          docker push biotux7/js-frontend:latest
-        run: |
-          docker push biotux7/microservice:${{ steps.generate_sha.outputs.sha }}
-          docker tag biotux7/microservice:${{ steps.generate_sha.outputs.sha }} biotux7/microservice:latest
-          docker push biotux7/microservice:latest
-        uses: fjogeleit/yaml-update-action@master
-        with:
-          branch: main
-          valueFile: 'helm-app/values.yaml'
-          propertyPath: 'client.image.tag'
-          value: ${{ steps.generate_sha.outputs.sha }}
-          commitChange: true
-          updateFile: true
-          message: "NEW: Update tag for both images in values helm"
-        uses: fjogeleit/yaml-update-action@master
-        with:
-          branch: main
-          valueFile: 'helm-app/values.yaml'
-          propertyPath: 'backend.image.tag'
-          value: ${{ steps.generate_sha.outputs.sha }}
-          commitChange: true
-          updateFile: true
-          message: "NEW: Update tag for both images in values helm"
+          SHA=$(echo $GITHUB_SHA)
+          echo "::set-output name=sha::$SHA"
+
+
