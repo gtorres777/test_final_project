@@ -1,0 +1,55 @@
+name: CI/CD react node helm chart
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@v3
+          
+      - name: Generate sha
+        id: generate_sha
+        run: |
+          SHA=$(echo $GITHUB_SHA | head -c7 )
+          echo "::set-output name=sha::$SHA"
+
+      - name: Build js-frontend docker image
+        run: docker build -t biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} -f ./app/client
+      
+      - name: Build microservice docker image
+        run: docker build -t biotux7/microservice:${{ steps.generate_sha.outputs.sha }} -f ./app/server
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Push js-frontend image
+        run: |
+          docker push biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }}
+          docker tag biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} biotux7/js-frontend:latest
+          docker push biotux7/js-frontend:latest
+          
+      - name: Push microservice image
+        run: |
+          docker push biotux7/microservice:${{ steps.generate_sha.outputs.sha }}
+          docker tag biotux7/microservice:${{ steps.generate_sha.outputs.sha }} biotux7/microservice:latest
+          docker push biotux7/microservice:latest
+
+      - name: Update js-frontend image helm
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          branch: main
+          valueFile: 'helm-app/react-node-app/values.yaml'
+          propertyPath: 'image.tag'
+          value: ${{ steps.generate_sha.outputs.sha }}
+          commitChange: true
+          updateFile: true
+          message: "NEW: Update tag in values helm"

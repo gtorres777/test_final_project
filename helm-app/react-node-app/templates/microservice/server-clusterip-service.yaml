@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.backend.name }}-cluster-ip-service
+  namespace: {{ .Values.environment.name }}
+spec:
+  type: ClusterIP
+  selector:
+    component: {{ .Values.backend.name }}
+  ports:
+    - port: {{ .Values.backend.servicePorts.port }}
+      targetPort: {{ .Values.backend.servicePorts.targetPort }}
