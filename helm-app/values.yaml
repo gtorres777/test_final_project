@@ -1,61 +1,31 @@
-# -- Change variable according the environment (dev, stage, prod)
-
 environment:
   name: dev
-
-
-
-# -- Client JS Frontend
-
 client:
-
   name: frontend
-
   replicaCount: 1
-
   image:
     repository: biotux7/js-frontend
-    tag: 1
-
-  # -- Ports for deployment
+    tag: '4965e19'
   deploymentPorts:
     containerPort: 3000
-
-  # -- Ports for service
   servicePorts:
     port: 3000
     targetPort: 3000
-
-  # -- Ports for ingress
   ingressPorts:
     port: 3000
-
-
-# -- Microservice backend 
-
 backend:
-
   name: microservice
-
   replicaCount: 3
-
   image:
     repository: biotux7/microservice
     tag: 1
-
-  # -- Ports for deployment
   deploymentPorts:
     containerPort: 5000
-
-  # -- Ports for service
   servicePorts:
     port: 5000
     targetPort: 5000
-
-  # -- Ports for ingress
   ingressPorts:
     port: 5000
-
   env:
     PGUSER: postgres
     PGHOST: postgres-cluster-ip-service
