@@ -1,14 +1,13 @@
-import React from 'react';
+import React from 'react'
 
 const Header = () => {
-
-    return (
+  return (
         <div className="header">
             <h1>
                 AWS 5 Trainee PERN Stack Example
             </h1>
         </div>
-    )
+  )
 }
 
 export default Header

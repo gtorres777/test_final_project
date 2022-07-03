@@ -1,15 +1,13 @@
 import React from 'react'
 import EditTaskModal from './EditTaskModal'
 
-export const Tasks = ({tasks, deleteTask, taskEdited}) => {
+export const Tasks = ({ tasks, deleteTask, taskEdited }) => {
+  console.log('tasks length:::', tasks)
+  if (tasks.length === 0) return null
 
-    console.log('tasks length:::', tasks)
-    if (tasks.length === 0) return null
-
-    const TaskRow = (task,index) => {
-
-        return(
-              <tr key = {index} className={index%2 === 0?'odd':'even'}>
+  const TaskRow = (task, index) => {
+    return (
+              <tr key = {index} className={index % 2 === 0 ? 'odd' : 'even'}>
                   <td>{task.id}</td>
                   <td>{task.task}</td>
                   <td>{task.assignee}</td>
@@ -27,12 +25,12 @@ export const Tasks = ({tasks, deleteTask, taskEdited}) => {
                     </div>
                   </td>
               </tr>
-          )
-    }
+    )
+  }
 
-    const taskTable = tasks.map((task,index) => TaskRow(task,index))
+  const taskTable = tasks.map((task, index) => TaskRow(task, index))
 
-    return(
+  return (
         <div className="container">
             <h2>Tasks</h2>
             <table className="table table-bordered">
@@ -49,5 +47,5 @@ export const Tasks = ({tasks, deleteTask, taskEdited}) => {
                 </tbody>
             </table>
         </div>
-    )
+  )
 }

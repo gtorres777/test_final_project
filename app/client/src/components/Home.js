@@ -1,40 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css';
+import React, { useState, useEffect } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '../App.css'
 import Header from './Header'
 import { Tasks } from './Tasks'
 import CreateTask from './CreateTask'
-import { getAllTasks, deleteTask, fetchSettings } from '../services/TaskService'
+import { getAllTasks, deleteTask } from '../services/TaskService'
 
-function Home() {
-
+function Home () {
   const [tasks, setTasks] = useState([])
   const [numberOfTasks, setNumberOfTasks] = useState([])
   const [isTaskEdited, setTaskEdited] = useState(false)
 
   useEffect(() => {
     getAllTasks().then(tasks => {
-        console.log(tasks)
-        setTasks(tasks)
-      });
+      console.log(tasks)
+      setTasks(tasks)
+    })
   }, [numberOfTasks, isTaskEdited])
 
-
-  function delTask(taskId) {
-      deleteTask(taskId).then(response => {
-        console.log(response)
-        setNumberOfTasks(numberOfTasks - 1)
-      });
+  function delTask (taskId) {
+    deleteTask(taskId).then(response => {
+      console.log(response)
+      setNumberOfTasks(numberOfTasks - 1)
+    })
   }
 
-  function taskCreated() {
+  function taskCreated () {
     setNumberOfTasks(numberOfTasks + 1)
   }
 
-  function taskEdited(res) {
-     setTaskEdited(res)
+  function taskEdited (res) {
+    setTaskEdited(res)
   }
-    
+
   return (
     <div className="App">
       <Header></Header>
@@ -47,9 +45,9 @@ function Home() {
       </div>
       <div className="container mrgnbtm">
         <Tasks tasks={tasks} deleteTask={delTask} taskEdited={taskEdited}></Tasks>
-     </div> 
+     </div>
   </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

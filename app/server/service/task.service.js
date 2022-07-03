@@ -1,25 +1,21 @@
-const taskRepository  = require('../repository/task.repository');
+const taskRepository = require('../repository/task.repository')
 
 class TaskService {
+  async getTasks () {
+    return await taskRepository.getTasks()
+  }
 
-    constructor() {}
+  async createTask (task) {
+    return await taskRepository.createTask(task)
+  }
 
-    async getTasks() {
-        return await taskRepository.getTasks();
-    }
+  async updateTask (task) {
+    return await taskRepository.updateTask(task)
+  }
 
-    async createTask(task) {
-        return await taskRepository.createTask(task);
-    }
-
-    async updateTask(task) {
-        return await taskRepository.updateTask(task);
-    }
-
-    async deleteTask(taskId) {
-        return await taskRepository.deleteTask(taskId);
-    }
-
+  async deleteTask (taskId) {
+    return await taskRepository.deleteTask(taskId)
+  }
 }
 
-module.exports = new TaskService();
+module.exports = new TaskService()

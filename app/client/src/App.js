@@ -1,17 +1,16 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
 import Home from './components/Home'
 import {
   BrowserRouter,
   Routes,
   Route
-} from "react-router-dom";
+} from 'react-router-dom'
 
-function App() {
+function App () {
+  return (
 
-  return(
-   
     <BrowserRouter>
       <div>
         <Routes>
@@ -20,7 +19,6 @@ function App() {
       </div>
     </BrowserRouter>
   )
-
 }
 
-export default App;
+export default App
