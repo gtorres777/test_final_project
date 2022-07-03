@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: '16'
       - name: Build docker Image to test
-        run: docker build -t biotux7/microservice-test -f ./Dockerfile.dev
+        run: docker build -t biotux7/microservice-test -f Dockerfile.dev .
       - name: test 
         run: docker run -e CI=true biotux7/microservice-test npm test
 

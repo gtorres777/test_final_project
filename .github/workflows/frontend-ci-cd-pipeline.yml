@@ -79,6 +79,9 @@ jobs:
           SHA=$(echo $GITHUB_SHA)
           echo "::set-output name=sha::$SHA"
 
+      - name: donde estoy
+        run: ls
+
       - name: Build js-frontend docker image
         run: docker build -t biotux7/js-frontend:${{ steps.generate_sha.outputs.sha }} ./app/client
       
