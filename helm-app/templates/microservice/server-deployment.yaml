@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.environment.name }}
 spec:
   replicas: {{ .Values.backend.replicaCount }}
-revisionHistoryLimit: 0
+  revisionHistoryLimit: 0
   selector:
     matchLabels:
       component: {{ .Values.backend.name }}
