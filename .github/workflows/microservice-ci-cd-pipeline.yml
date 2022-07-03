@@ -69,6 +69,8 @@ jobs:
         run: npm test
 
   build_and_push_image:
+    needs: [apply_linter, build_prod_files, tests]
+    runs-on: ubuntu-latest
     steps:
       - name: Generate sha
         id: generate_sha
