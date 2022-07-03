@@ -5,7 +5,7 @@ client:
   replicaCount: 1
   image:
     repository: biotux7/js-frontend
-    tag: 773f31d83cd180ff8d762297f6c8b9e09c0fba58
+    tag: c7444ab61079e460bdc71dec0631abd3ca9b073b
   deploymentPorts:
     containerPort: 3000
   servicePorts:
