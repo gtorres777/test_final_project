@@ -28,26 +28,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  build_prod_files:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./app/server
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      - uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: build
-
   tests:
     needs: [apply_linter, build_prod_files]
     runs-on: ubuntu-latest
@@ -60,17 +40,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - name: Install dependencies
-        run: npm install
-      - uses: actions/download-artifact@v3
-        with:
-          name: build
-          path: build
-      - name: Test
-        run: npm test
+      - name: Build docker Image to test
+        run: docker build -t biotux7/microservice-test -f ./Dockerfile.dev
+      - name: test 
+        run: docker run -e CI=true biotux7/microservice-test npm test
 
   build_and_push_image:
-    needs: [apply_linter, build_prod_files, tests]
+    needs: [apply_linter, tests]
     runs-on: ubuntu-latest
     steps:
       - name: Generate sha
