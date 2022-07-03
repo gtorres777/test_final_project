@@ -46,7 +46,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: build
-          path: build
+          path: ./app/client/build
 
   tests:
     needs: [apply_linter, build_prod_files]
