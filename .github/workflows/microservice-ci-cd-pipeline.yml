@@ -48,6 +48,9 @@ jobs:
   build_and_push_image:
     needs: [apply_linter, tests]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
     steps:
       - name: Generate sha
         id: generate_sha
