@@ -4,7 +4,7 @@ const Header = () => {
   return (
         <div className="header">
             <h1>
-                AWS 18 Trainee PERN Stack Example
+                AWS 19 Trainee PERN Stack Example
             </h1>
         </div>
   )
