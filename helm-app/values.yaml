@@ -15,7 +15,7 @@ client:
     port: 3000
 backend:
   name: microservice
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: biotux7/microservice
     tag: 97e0edf0e8a22829439c7dc7b2d32ce503c45137
