@@ -18,7 +18,7 @@ backend:
   replicaCount: 2
   image:
     repository: biotux7/microservice
-    tag: 97e0edf0e8a22829439c7dc7b2d32ce503c45137
+    tag: c7ef3735348de0e0e5e7e1021edfd966e81d461c
   deploymentPorts:
     containerPort: 5000
   servicePorts:
