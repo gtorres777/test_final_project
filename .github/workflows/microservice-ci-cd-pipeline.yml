@@ -3,11 +3,11 @@ name: CI/CD node microservice
 on:
   push:
     branches:
-      - main
+      - dev
     paths:
-      - 'app/server/**'
-      - '!helm-app/**'
-      - '!app/client/**'
+      - 'react-node-app/microservice/**'
+      - '!helm-react-node-app/**'
+      - '!react-node-app/frontend/**'
       - '!.github/**'
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./app/server
+        working-directory: ./react-node-app/microservice
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./app/server
+        working-directory: ./react-node-app/microservice
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -62,7 +62,7 @@ jobs:
           echo "::set-output name=sha::$SHA"
 
       - name: Build microservice docker image
-        run: docker build -t biotux7/microservice:${{ steps.generate_sha.outputs.sha }} ./app/server
+        run: docker build -t biotux7/${{ github.ref_name }}-microservice:${{ steps.generate_sha.outputs.sha }} ./react-node-app/microservice
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -72,15 +72,15 @@ jobs:
       
       - name: Push microservice image
         run: |
-          docker push biotux7/microservice:${{ steps.generate_sha.outputs.sha }}
-          docker tag biotux7/microservice:${{ steps.generate_sha.outputs.sha }} biotux7/microservice:latest
-          docker push biotux7/microservice:latest
+          docker push biotux7/${{ github.ref_name }}-microservice:${{ steps.generate_sha.outputs.sha }}
+          docker tag biotux7/${{ github.ref_name }}-microservice:${{ steps.generate_sha.outputs.sha }} biotux7/${{ github.ref_name }}-microservice:latest
+          docker push biotux7/${{ github.ref_name }}-microservice:latest
 
       - name: Update microservice image helm
         uses: fjogeleit/yaml-update-action@master
         with:
-          branch: main
-          valueFile: 'helm-app/values.yaml'
+          branch: dev
+          valueFile: 'helm-react-node-app/values.yaml'
           propertyPath: 'backend.image.tag'
           value: ${{ steps.generate_sha.outputs.sha }}
           commitChange: true

@@ -4,7 +4,7 @@ client:
   name: frontend
   replicaCount: 1
   image:
-    repository: biotux7/js-frontend
+    repository: biotux7/dev-js-frontend
     tag: c7444ab61079e460bdc71dec0631abd3ca9b073b
   deploymentPorts:
     containerPort: 3000
@@ -17,7 +17,7 @@ backend:
   name: microservice
   replicaCount: 1
   image:
-    repository: biotux7/microservice
+    repository: biotux7/dev-microservice
     tag: 97e0edf0e8a22829439c7dc7b2d32ce503c45137
   deploymentPorts:
     containerPort: 5000

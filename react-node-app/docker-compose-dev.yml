@@ -13,7 +13,7 @@ services:
   nginx:
     depends_on:
       - api
-      - client
+      - frontend
     restart: always
     build:
       dockerfile: Dockerfile.dev
@@ -21,15 +21,15 @@ services:
     ports:
       - '3050:80'
 
-  client:
+  frontend:
     environment:
       - WDS_SOCKET_PORT=0
     build:
       dockerfile: Dockerfile.dev
-      context: ./client
+      context: ./frontend
     volumes:
       - /app/node_modules
-      - ./client:/app
+      - ./frontend:/app
 
   api:
     depends_on:
@@ -37,10 +37,10 @@ services:
         condition: service_healthy
     build:
       dockerfile: Dockerfile.dev
-      context: ./server
+      context: ./microservice
     volumes:
       - /app/node_modules
-      - ./server:/app
+      - ./microservice:/app
     environment:
       - PGUSER=postgres
       - PGHOST=db
