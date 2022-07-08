@@ -31,4 +31,4 @@ backend:
     PGUSER: postgres
     PGHOST: postgres-rds.cz0vpnsvjuwe.us-east-1.rds.amazonaws.com
     PGDATABASE: postgres
-    PGPASSWORD: postgres
+    PGPASSWORD: myscretpassword
