@@ -8,6 +8,6 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: dev.gustavo-td.link
+  commonName: {{ .Values.client.dn }}
   dnsNames:
-    - dev.gustavo-td.link
+    - {{ .Values.client.dn }}

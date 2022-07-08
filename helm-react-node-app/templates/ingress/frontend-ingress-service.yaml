@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - dev.gustavo-td.link
+        - {{ .Values.client.dns }}
       secretName: {{ .Values.client.name }}-com
   rules:
-    - host: dev.gustavo-td.link
+    - host: {{ .Values.client.dns }}
       http:
         paths:
           - path: /

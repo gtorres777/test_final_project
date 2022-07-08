@@ -3,6 +3,7 @@ environment:
 client:
   name: frontend
   replicaCount: 1
+  dns: dev.gustavo-td.link
   image:
     repository: biotux7/dev-js-frontend
     tag: a5c4a1c16d5d75176453d49bcf6d2db55575c32b
