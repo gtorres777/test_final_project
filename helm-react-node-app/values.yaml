@@ -1,9 +1,9 @@
 environment:
   name: dev
+  dns: dev.gustavo-td.link
 client:
   name: frontend
   replicaCount: 1
-  dns: dev.gustavo-td.link
   image:
     repository: biotux7/dev-js-frontend
     tag: a5c4a1c16d5d75176453d49bcf6d2db55575c32b
@@ -28,7 +28,7 @@ backend:
   ingressPorts:
     port: 5000
   env:
-    PGUSER: postgres
+    PGUSER: devuser
     PGHOST: postgres-rds.cz0vpnsvjuwe.us-east-1.rds.amazonaws.com
-    PGDATABASE: postgres
-    PGPASSWORD: myscretpassword
+    PGDATABASE: development
+    PGPASSWORD: development

@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{ .Values.client.dns }}
+        - {{ .Values.environment.dns }}
       secretName: {{ .Values.client.name }}-com
   rules:
-    - host: {{ .Values.client.dns }}
+    - host: {{ .Values.environment.dns }}
       http:
         paths:
           - path: /

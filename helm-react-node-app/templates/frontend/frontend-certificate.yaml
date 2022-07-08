@@ -8,6 +8,6 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: {{ .Values.client.dns }}
+  commonName: {{ .Values.environment.dns }}
   dnsNames:
-    - {{ .Values.client.dns }}
+    - {{ .Values.environment.dns }}
