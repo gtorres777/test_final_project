@@ -1,11 +1,11 @@
 environment:
-  name: dev
-  dns: dev.yacapai.com
+  name: stage
+  dns: stage.yacapai.com
 client:
   name: frontend
   replicaCount: 1
   image:
-    repository: biotux7/dev-js-frontend
+    repository: biotux7/stage-js-frontend
     tag: 2e968eae12263f154f5d5859ab9072dee8767393
   deploymentPorts:
     containerPort: 3000
@@ -18,7 +18,7 @@ backend:
   name: microservice
   replicaCount: 1
   image:
-    repository: biotux7/dev-microservice
+    repository: biotux7/stage-microservice
     tag: 7c6cb93d372ad86c4a655ee1464199b7c7ab81e2
   deploymentPorts:
     containerPort: 5000
@@ -28,7 +28,7 @@ backend:
   ingressPorts:
     port: 5000
   env:
-    PGUSER: devuser
+    PGUSER: stageuser
     PGHOST: postgres-rds.cz0vpnsvjuwe.us-east-1.rds.amazonaws.com
-    PGDATABASE: development
-    PGPASSWORD: development
+    PGDATABASE: stage
+    PGPASSWORD: stage
