@@ -6,8 +6,8 @@ metadata:
 spec:
   secretName: {{ .Values.client.name }}-com
   issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
+    name: letsencrypt-{{ .Values.environment.name }}
+    kind: Issuer
   commonName: {{ .Values.environment.dns }}
   dnsNames:
     - {{ .Values.environment.dns }}

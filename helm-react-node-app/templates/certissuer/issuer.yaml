@@ -1,14 +1,14 @@
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
-  name: letsencrypt-prod
+  name: letsencrypt-{{ .Values.environment.name }}
   namespace: {{ .Values.environment.name }}
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     email: "tuxknrp@gmail.com"
     privateKeySecretRef:
-      name: letsencrypt-prod
+      name: letsencrypt-{{ .Values.environment.name }}
     solvers:
       - http01:
           ingress:
