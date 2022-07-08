@@ -28,7 +28,7 @@ backend:
   ingressPorts:
     port: 5000
   env:
-    PGUSER: devuser
+    PGUSER: postgres
     PGHOST: postgres-rds.cz0vpnsvjuwe.us-east-1.rds.amazonaws.com
-    PGDATABASE: development
-    PGPASSWORD: development
+    PGDATABASE: postgres
+    PGPASSWORD: mysecretpassword
