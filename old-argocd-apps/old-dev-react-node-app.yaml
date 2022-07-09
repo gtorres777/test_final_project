@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-react-node-app
+spec:
+  destination:
+    name: ''
+    namespace: dev
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: helm-app
+    repoURL: 'https://github.com/gtorres777/test_final_project'
+    targetRevision: main
+    helm:
+      parameters:
+        - name: backend.env.PGDATABASE
+          value: development
+        - name: backend.env.PGPASSWORD
+          value: development
+        - name: backend.env.PGUSER
+          value: devuser
+        - name: environment.name
+          value: dev
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

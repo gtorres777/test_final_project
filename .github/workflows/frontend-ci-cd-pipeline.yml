@@ -8,8 +8,10 @@ on:
       - 'react-node-app/frontend/**'
       - '!helm-react-node-app/**'
       - '!argocd-apps/**'
+      - '!old-argocd-apps/**'
       - '!react-node-app/microservice/**'
       - '!.github/**'
+      - '!ofp.yaml/**'
 
 jobs:
 
